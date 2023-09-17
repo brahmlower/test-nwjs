@@ -1,0 +1,56 @@
+version: '3'
+
+vars:
+  DIST: "./dist"
+  DIST_JS: "{{.DIST}}/js"
+  DIST_APP: "{{.DIST}}/app"
+  NWJS_LOCATION: $HOME/Downloads/nwjs-sdk-v0.79.1-osx-arm64/nwjs.app
+  APP_NAME: NW App Test 🌮.app
+
+tasks:
+  build-js:
+    deps: [clean-js]
+    cmds:
+      - bun build ./src/main.ts --outfile={{.DIST_JS}}/main.js
+      - bun build ./src/app.ts --outfile={{.DIST_JS}}/app.js
+      - cp ./src/app.css "{{.DIST_JS}}/."
+      - cp ./src/index.html "{{.DIST_JS}}/."
+      - cp app.package.json "{{.DIST_JS}}/package.json"
+
+  build-app:
+    deps:
+      - clean-app
+      - build-js
+    cmds:
+      - mkdir -p "{{.DIST_APP}}"
+      - cp -r "{{.NWJS_LOCATION}}" "{{.DIST_APP}}/{{.APP_NAME}}"
+      - mkdir "{{.DIST_APP}}/{{.APP_NAME}}/Contents/Resources/app.nw"
+      - cp -r {{.DIST_JS}}/* "{{.DIST_APP}}/{{.APP_NAME}}/Contents/Resources/app.nw/."
+
+  clean-js:
+    cmds:
+      - rm -rf "{{.DIST_JS}}"
+
+  clean-app:
+    cmds:
+      - rm -rf "{{.DIST_APP}}"
+
+  clean:
+    deps:
+      - clean-js
+      - clean-app
+
+  run:
+    cmds:
+      - open "{{.DIST_APP}}/{{.APP_NAME}}"
+
+  run-dev:
+    sources:
+      - ./src/**/*
+    status:
+      - exit 1
+    deps:
+      - clean-js
+      - build-js
+    cmds:
+      - "{{.NWJS_LOCATION}}/Contents/MacOS/nwjs dist/js"

@@ -1,0 +1,24 @@
+<html>
+	<head>
+		<meta charset="utf-8" />
+
+		<title>Emoji.Select</title>
+		<link rel="stylesheet" href="app.css" />
+		<script>
+			function forceRefresh() {
+				var canvas = document.getElementById("forceRefreshCanvas");
+				var ctx = canvas.getContext("2d");
+				ctx.clearRect(0, 0, canvas.width, canvas.height);
+				window.requestAnimationFrame(forceRefresh);
+			}
+		</script>
+	</head>
+
+	<body onload="forceRefresh();">
+		<canvas id="forceRefreshCanvas" width="1" height="1"></canvas>
+
+		<iframe id="game" src="https://emoji.select/" frameborder="0" marginheight="0" marginwidth="0" width="100%" height="100%" scrolling="auto"></iframe>
+	</body>
+
+	<script type="application/javascript" src="app.js"></script>
+</html>

@@ -1,0 +1,15 @@
+{
+  "name": "NW App Test 🌮",
+  "main": "src/main.ts",
+  "chromium-args": "--enable-logging=stderr --v=1",
+  "devDependencies": {
+    "bun-types": "^1.0.2",
+    "nwjs-types": "^1.0.0"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "typescript": "^5.2.2"
+  }
+}

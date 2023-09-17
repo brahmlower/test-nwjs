@@ -1,0 +1,6 @@
+{
+    "name": "NW App Test 🌮",
+    "main": "main.js",
+    "chromium-args": "--enable-logging=stderr",
+    "nodejs": true
+}
